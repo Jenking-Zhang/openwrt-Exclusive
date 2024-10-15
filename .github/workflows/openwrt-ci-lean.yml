@@ -136,6 +136,13 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
+      - name: Show .config
+          working-directory: ./openwrt
+          run: |
+            ls -al
+            ls -al .config
+            cat .config
+
       - name: Download packages
         working-directory: ./openwrt
         run: |
