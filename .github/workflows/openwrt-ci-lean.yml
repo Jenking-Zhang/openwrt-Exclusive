@@ -31,14 +31,17 @@ jobs:
     # runs-on: ubuntu-22.04
 
     steps:
-      - name: Show Information
+      - name: Show Task Information
         run: |
           echo "SSH connection: ${{ github.event.inputs.ssh }}"
           echo "Repo URL: $REPO_URL"
           echo "Repo Branch: $REPO_BRANCH"
 
-      - name: Check Server Performance
+      - name: Check Server Information
         run: |
+          echo "--------------------------System Information--------------------------"
+          echo "Operating System: $(lsb_release -d | awk -F'\t' '{print $2}')"
+          echo "Kernel Version: $(uname -r)"
           echo "--------------------------CPU Information--------------------------"
           echo "Physical CPU Count: $(cat /proc/cpuinfo | grep "physical id" | sort | uniq | wc -l)"
           echo "CPU Core Count: $(nproc)"
