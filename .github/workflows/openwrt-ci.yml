@@ -114,7 +114,6 @@ jobs:
         run: make defconfig
 
       - name: Launch SSH Management
-        working-directory: ./openwrt
         uses: P3TERX/ssh2actions@v1.0.0
         if: github.event.inputs.ssh == 'true'
         env:
