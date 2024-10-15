@@ -126,11 +126,10 @@ jobs:
         run: cp -f myconfig/x86.config ./openwrt/.config
 
       - name: Upload .config
-        working-directory: ./openwrt
         uses: actions/upload-artifact@v3
         with:
           name: .config
-          path: ./.config
+          path: ./openwrt/.config
 
       - name: Download packages
         working-directory: ./openwrt
@@ -160,36 +159,31 @@ jobs:
           cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
 
       - name: Upload buildinfo
-        working-directory: ./openwrt
         uses: actions/upload-artifact@v3
         with:
           name: OpenWrt_buildinfo
-          path: ./artifact/buildinfo/
+          path: ./openwrt/artifact/buildinfo/
 
       - name: Upload firmware x64 EFI
-        working-directory: ./openwrt
         uses: actions/upload-artifact@v3
         with:
           name: openwrt-x86-64-generic-squashfs-combined-efi.img.gz
-          path: ./bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz
+          path: ./openwrt/bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz
 
       - name: Upload firmware x64
-        working-directory: ./openwrt
         uses: actions/upload-artifact@v3
         with:
           name: openwrt-x86-64-generic-squashfs-rootfs.img.gz
-          path: ./bin/targets/x86/64/openwrt-x86-64-generic-squashfs-rootfs.img.gz
+          path: ./openwrt/bin/targets/x86/64/openwrt-x86-64-generic-squashfs-rootfs.img.gz
 
       - name: Upload package
-        working-directory: ./openwrt
         uses: actions/upload-artifact@v3
         with:
           name: OpenWrt_package
-          path: ./artifact/package/
+          path: ./openwrt/artifact/package/
 
       - name: Upload firmware ALL
-        working-directory: ./openwrt
         uses: actions/upload-artifact@v3
         with:
           name: OpenWrt_firmware
-          path: ./bin/targets/
+          path: ./openwrt/bin/targets/
