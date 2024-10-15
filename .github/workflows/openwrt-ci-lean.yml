@@ -136,15 +136,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-      - name: Show .config
-        working-directory: ./openwrt
-        run: |
-          ls -al
-          ls -al .config
-          cat .config
-          tar -cvf config.tar .config
-
-      - name: Download packages
+       - name: Download packages
         working-directory: ./openwrt
         run: |
           make download -j16
@@ -165,26 +157,19 @@ jobs:
       - name: Prepare artifact
         working-directory: ./openwrt
         run: |
+          ls -al
           mkdir -p ./artifact/package
           mkdir -p ./artifact/buildinfo
           rm -rf $(find ./bin/targets/ -type d -name "packages")
-          # cp -f ./.config ./artifact/config/.config
           tar -cvf ./artifact/config/config.tar .config
           cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
           cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
 
-      - name: Show .config
-        working-directory: ./openwrt
-        run: |
-          ls -al
-          ls -al .config
-          cat .config
-
-      # - name: Upload .config
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: .config
-      #     path: ./artifact/config/.config
+      - name: Upload .config
+        uses: actions/upload-artifact@v3
+        with:
+          name: .config
+          path: ./artifact/config/config.tar
 
       - name: Upload buildinfo
         uses: actions/upload-artifact@v3
