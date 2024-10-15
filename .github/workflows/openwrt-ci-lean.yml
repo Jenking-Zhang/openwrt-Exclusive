@@ -75,7 +75,7 @@ jobs:
           sudo -E apt -y autoremove --purge
           sudo -E apt clean
           sudo -E timedatectl set-timezone "Asia/Shanghai"
-          
+
           echo "--------------------------Disk Information After Cleanup--------------------------"
           echo "Disk Count: $(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
 
@@ -157,15 +157,22 @@ jobs:
           mkdir -p ./artifact/package
           mkdir -p ./artifact/buildinfo
           rm -rf $(find ./bin/targets/ -type d -name "packages")
-          cp -rf ./.config ./artifact/config/.config
+          # cp -f ./.config ./artifact/config/.config
           cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
           cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
 
-      - name: Upload .config
-        uses: actions/upload-artifact@v3
-        with:
-          name: .config
-          path: ./artifact/config/.config
+      - name: Show .config
+        working-directory: ./openwrt
+        run: |
+          ls -al
+          ls -al .config
+          cat .config
+
+      # - name: Upload .config
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: .config
+      #     path: ./artifact/config/.config
 
       - name: Upload buildinfo
         uses: actions/upload-artifact@v3
