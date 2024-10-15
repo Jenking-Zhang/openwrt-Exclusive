@@ -27,8 +27,8 @@ jobs:
 
     name: Build OpenWrt Firmware
 
-    runs-on: ubuntu-latest
-    # runs-on: ubuntu-22.04
+    # runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Show Task Information
@@ -135,13 +135,6 @@ jobs:
         env:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-
-      - name: Show .config1
-          working-directory: ./openwrt
-          run: |
-            ls -al
-            ls -al .config
-            cat .config
 
       - name: Download packages
         working-directory: ./openwrt
