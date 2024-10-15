@@ -142,6 +142,7 @@ jobs:
           ls -al
           ls -al .config
           cat .config
+          tar -cvf config.tar .config
 
       - name: Download packages
         working-directory: ./openwrt
@@ -168,6 +169,7 @@ jobs:
           mkdir -p ./artifact/buildinfo
           rm -rf $(find ./bin/targets/ -type d -name "packages")
           # cp -f ./.config ./artifact/config/.config
+          tar -cvf ./artifact/config/config.tar .config
           cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
           cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
 
