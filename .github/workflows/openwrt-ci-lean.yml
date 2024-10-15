@@ -136,7 +136,7 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-       - name: Download packages
+      - name: Download packages
         working-directory: ./openwrt
         run: |
           make download -j16
