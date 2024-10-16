@@ -52,7 +52,7 @@ jobs:
           echo "--------------------------Disk Information--------------------------"
           echo "Disk Count: $(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
 
-      - name: Space cleanup and Initialization environment
+      - name: Space Cleanup And Initialization Environment
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
@@ -90,7 +90,7 @@ jobs:
         run: |
           git clone $REPO_URL -b $REPO_BRANCH openwrt
 
-      - name: Add feeds
+      - name: Add Feeds
         working-directory: ./openwrt
         run: |
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
@@ -98,13 +98,13 @@ jobs:
           echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall;main' >> feeds.conf.default
           echo 'src-git lucky https://github.com/sirpdboy/luci-app-lucky;main' >> feeds.conf.default
 
-      - name: Update feeds
+      - name: Update Feeds
         working-directory: ./openwrt
         run: |
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
-      - name: Get latest Tailscale version
+      - name: Get Latest Tailscale Version
         working-directory: ./openwrt
         run: |
           latest_version=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | grep 'tag_name' | cut -d '"' -f 4 | sed 's/^v//')
@@ -116,19 +116,19 @@ jobs:
           sed -i "s/PKG_VERSION:=.*/PKG_VERSION:=${latest_version}/" feeds/packages/net/tailscale/Makefile
           sed -i "s/^PKG_HASH:=.*/PKG_HASH:=${tailscale_hash}/" feeds/packages/net/tailscale/Makefile
 
-      - name: Add tailscale luci
+      - name: Add Tailscale Luci
         working-directory: ./openwrt
         run: |
           # sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' feeds/packages/net/tailscale/Makefile
           git clone https://github.com/asvow/luci-app-tailscale package/luci-app-tailscale
 
-      - name: Generate configuration file
-        working-directory: ./openwrt
-        run: make defconfig
-
-      - name: Import custom configuration file
+      - name: Import Custom Configuration
         working-directory: ./
         run: cp -f myconfig/x86.config ./openwrt/.config
+
+      - name: Generate Configuration
+        working-directory: ./openwrt
+        run: make defconfig
 
       - name: Launch SSH Management
         uses: P3TERX/ssh2actions@v1.0.0
@@ -137,12 +137,12 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
-      - name: Download packages
+      - name: Download Packages
         working-directory: ./openwrt
         run: |
           make download -j16
 
-      - name: Compile firmware
+      - name: Compile Firmware
         working-directory: ./openwrt
         run: |
           make -j$(nproc) || make -j1 V=s
@@ -171,31 +171,31 @@ jobs:
           path: ./openwrt/.config
           include-hidden-files: true
 
-      - name: Upload buildinfo
+      - name: Upload Buildinfo
         uses: actions/upload-artifact@v3
         with:
           name: OpenWrt_buildinfo
           path: ./openwrt/artifact/buildinfo/
 
-      - name: Upload firmware x64 EFI
+      - name: Upload Firmware x64 EFI
         uses: actions/upload-artifact@v3
         with:
           name: openwrt-x86-64-generic-squashfs-combined-efi.img.gz
           path: ./openwrt/bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.img.gz
 
-      - name: Upload firmware x64
+      - name: Upload Firmware x64
         uses: actions/upload-artifact@v3
         with:
           name: openwrt-x86-64-generic-squashfs-rootfs.img.gz
           path: ./openwrt/bin/targets/x86/64/openwrt-x86-64-generic-squashfs-rootfs.img.gz
 
-      - name: Upload package
+      - name: Upload Package
         uses: actions/upload-artifact@v3
         with:
           name: OpenWrt_package
           path: ./openwrt/artifact/package/
 
-      - name: Upload firmware ALL
+      - name: Upload Firmware ALL
         uses: actions/upload-artifact@v3
         with:
           name: OpenWrt_firmware
