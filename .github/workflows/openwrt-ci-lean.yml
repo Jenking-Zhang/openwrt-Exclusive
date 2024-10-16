@@ -137,6 +137,13 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
+      - name: Upload .config
+        uses: actions/upload-artifact@v3
+        with:
+          name: .config
+          path: ./openwrt/.config
+          include-hidden-files: true
+
       - name: Download Packages
         working-directory: ./openwrt
         run: |
@@ -163,13 +170,6 @@ jobs:
           rm -rf $(find ./bin/targets/ -type d -name "packages")
           cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
           cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
-
-      - name: Upload .config
-        uses: actions/upload-artifact@v3
-        with:
-          name: .config
-          path: ./openwrt/.config
-          include-hidden-files: true
 
       - name: Upload Buildinfo
         uses: actions/upload-artifact@v3
