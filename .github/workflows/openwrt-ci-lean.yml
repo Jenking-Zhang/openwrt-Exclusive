@@ -210,19 +210,19 @@ jobs:
       - name: Upload Firmware x64 EFI-vdi
         uses: actions/upload-artifact@v4
         with:
-          name: openwrt-x86-64-generic-squashfs-combined-efi.img.gz
+          name: openwrt-x86-64-generic-squashfs-combined-efi.vdi
           path: ./openwrt/bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vdi
 
       - name: Upload Firmware x64 EFI-vhdx
         uses: actions/upload-artifact@v4
         with:
-          name: openwrt-x86-64-generic-squashfs-combined-efi.img.gz
+          name: openwrt-x86-64-generic-squashfs-combined-efi.vhdx
           path: ./openwrt/bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vhdx
 
       - name: Upload Firmware x64 EFI-vmdk
         uses: actions/upload-artifact@v4
         with:
-          name: openwrt-x86-64-generic-squashfs-combined-efi.img.gz
+          name: openwrt-x86-64-generic-squashfs-combined-efi.vmdk
           path: ./openwrt/bin/targets/x86/64/openwrt-x86-64-generic-squashfs-combined-efi.vmdk
 
       - name: Upload Firmware x64
