@@ -121,7 +121,7 @@ jobs:
         run: |
           tailscale_latest_version=$(curl -s https://api.github.com/repos/tailscale/tailscale/releases/latest | grep 'tag_name' | cut -d '"' -f 4 | sed 's/^v//')
           echo "Latest Tailscale version: ${tailscale_latest_version}"
-          [ ! -d "./dl" ] && mkdir
+          [ ! -d "./dl" ] && mkdir -p ./dl
           wget https://codeload.github.com/tailscale/tailscale/tar.gz/v${tailscale_latest_version} -O dl/tailscale-${tailscale_latest_version}.tar.gz
           tailscale_hash=$(sha256sum dl/tailscale-${tailscale_latest_version}.tar.gz | awk '{ print $1 }')
 
@@ -139,7 +139,7 @@ jobs:
         run: |
           zerotier_latest_version=$(curl -s https://api.github.com/repos/zerotier/zerotierone/releases/latest | grep 'tag_name' | cut -d '"' -f 4 | sed 's/^v//')
           echo "Latest ZeroTierOne version: ${zerotier_latest_version}"
-          [ ! -d "./dl" ] && mkdir
+          [ ! -d "./dl" ] && mkdir -p ./dl
           wget https://codeload.github.com/zerotier/zerotierone/tar.gz/${zerotier_latest_version} -O dl/ZeroTierOne-${zerotier_latest_version}.tar.gz
           zerotier_hash=$(sha256sum dl/ZeroTierOne-${zerotier_latest_version}.tar.gz | awk '{ print $1 }')
 
