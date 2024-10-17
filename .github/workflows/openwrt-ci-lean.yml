@@ -14,6 +14,10 @@ on:
         description: 'SSH connection to Actions'
         required: false
         default: 'false'
+      config_file:
+        description: 'The configuration file name in the "myconfig" folder'
+        required: false
+        default: 'x86.config'
   # schedule:
   #   - cron: 0 20 * * *
 
@@ -52,6 +56,16 @@ jobs:
           echo "--------------------------Disk Information--------------------------"
           echo "Disk Count: $(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
 
+      - name: Checkout Project
+        uses: actions/checkout@main
+
+      - name: Check If Config File Exists
+        run: |
+          if [ ! -f "myconfig/${{ github.event.inputs.config_file }}" ]; then
+            echo "Error: Configuration file myconfig/${{ github.event.inputs.config_file }} does not exist."
+            exit 1
+          fi
+
       - name: Space Cleanup And Initialization Environment
         env:
           DEBIAN_FRONTEND: noninteractive
@@ -81,9 +95,6 @@ jobs:
 
           echo "--------------------------Disk Information After Cleanup--------------------------"
           echo "Disk Count: $(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
-
-      - name: Checkout Project
-        uses: actions/checkout@main
 
       - name: Pull Lean Firmware Source Code
         working-directory: ./
