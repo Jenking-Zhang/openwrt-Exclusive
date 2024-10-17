@@ -60,8 +60,9 @@ jobs:
         uses: actions/checkout@main
 
       - name: Check If Config File Exists
+        working-directory: ./
         run: |
-          if [ ! -f "myconfig/${{ github.event.inputs.config_file }}" ]; then
+          if [ ! -f "./myconfig/${{ github.event.inputs.config_file }}" ]; then
             echo "Error: Configuration file myconfig/${{ github.event.inputs.config_file }} does not exist."
             exit 1
           fi
