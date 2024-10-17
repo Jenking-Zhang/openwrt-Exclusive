@@ -136,7 +136,7 @@ jobs:
 
       - name: Import Custom Configuration
         working-directory: ./
-        run: cp -f myconfig/x86.config ./openwrt/.config
+        run: cp -f myconfig/${{ github.event.inputs.config_file }} ./openwrt/.config
 
       - name: Generate Configuration
         working-directory: ./openwrt
