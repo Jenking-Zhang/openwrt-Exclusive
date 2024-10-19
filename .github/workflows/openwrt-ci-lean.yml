@@ -108,7 +108,7 @@ jobs:
           sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
           echo 'src-git istore https://github.com/linkease/istore;main' >> feeds.conf.default
           # echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall;main' >> feeds.conf.default
-          echo 'src-git lucky https://github.com/sirpdboy/luci-app-lucky;main' >> feeds.conf.default
+          # echo 'src-git lucky https://github.com/sirpdboy/luci-app-lucky;main' >> feeds.conf.default
 
       - name: Update Feeds
         working-directory: ./openwrt
