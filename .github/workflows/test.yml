@@ -5,7 +5,7 @@
 #
 # Copyright (C) 2020 KFERMercer
 #
-name: OpenWrt-CI-LEAN
+name: OpenWrt-Test
 
 on:
   workflow_dispatch:
@@ -96,6 +96,12 @@ jobs:
 
           echo "--------------------------Disk Information After Cleanup--------------------------"
           echo "Disk Count: $(ls /dev/sd* | grep -v [1-9] | wc -l)" && df -hT
+
+      - name: Launch SSH Management
+        uses: P3TERX/ssh2actions@v1.0.0
+        env:
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
       - name: Pull Lean Firmware Source Code
         working-directory: ./
