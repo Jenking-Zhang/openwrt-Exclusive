@@ -80,7 +80,7 @@ jobs:
           sudo -E apt-mark hold grub-efi-amd64-signed
           sudo -E apt update
           # sudo -E apt -y purge azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* snap*
-          for pkg in for pkg in azure-cli* docker* ghc* zulu* *llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* snap* *jdk microsoft* texlive* mono*; do
+          for pkg in azure-cli* docker* ghc* zulu* llvm* firefox google* dotnet* powershell* openjdk* mysql* php* mongodb* dotnet* snap* *jdk microsoft* texlive* mono*; do
             if dpkg -l | grep -q "$pkg"; then
               sudo -E apt -y purge "$pkg*"
             else
